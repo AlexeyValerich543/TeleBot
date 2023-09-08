@@ -1,5 +1,6 @@
 package ru.alex543.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -10,41 +11,29 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
+    @Value("${bot.name}")
+private String botName;
+    @Value("${bot.token}")
+private String botToken;
 
-    private static final long RECONNECT_PAUSE = 1000;
+
 
     @Override
     public String getBotUsername() {
-        return "Alex543Bot";
+        return botName;
     }
 
     @Override
     public String getBotToken() {
-        return "6360698148:AAGCq7w4VXV9TZdHZUSBm7oIz9jzEhbEtBc";
+        return botToken;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
-//        System.out.println("update");
         var originalMessage = update.getMessage();
         System.out.println(originalMessage.getText());
 
     }
 
-//    public void botConnect() {
-//        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-//        try {
-//            telegramBotsApi.registerBot(this);
-////            log.info("TelegramAPI started. Look for messages");
-//        } catch (TelegramApiException e) {
-////            log.error("Cant Connect. Pause " + RECONNECT_PAUSE / 1000 + "sec and try again. Error: " + e.getMessage());
-//            try {
-//                Thread.sleep(RECONNECT_PAUSE);
-//            } catch (InterruptedException e1) {
-//                e1.printStackTrace();
-//                return;
-//            }
-//            botConnect();
-//        }
-//    }
+
 }
